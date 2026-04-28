@@ -1,0 +1,58 @@
+{
+  "best_model": "xgboost",
+  "models": {
+    "random_forest": {
+      "accuracy": 0.8087,
+      "f1_score": 0.8076,
+      "cv_mean": 0.7948,
+      "cv_std": 0.0098,
+      "precision": 0.8071,
+      "recall": 0.8087
+    },
+    "xgboost": {
+      "accuracy": 0.8517,
+      "f1_score": 0.8497,
+      "cv_mean": 0.8361,
+      "cv_std": 0.008,
+      "precision": 0.8498,
+      "recall": 0.8517
+    }
+  },
+  "feature_names": [
+    "temperature",
+    "humidity",
+    "wind_speed",
+    "visibility",
+    "weather_encoded",
+    "aqi",
+    "pm25",
+    "pm10",
+    "uv_estimate",
+    "hour_of_day",
+    "day_of_week",
+    "month",
+    "is_weekend",
+    "activity_encoded",
+    "place_encoded",
+    "is_outdoor",
+    "exertion_level",
+    "pollution_sensitivity",
+    "weather_sensitivity",
+    "crowd_sensitivity",
+    "uv_sensitivity",
+    "heat_sensitivity",
+    "crowd_estimate",
+    "medical_aqi_multiplier",
+    "medical_heat_multiplier",
+    "medical_uv_multiplier",
+    "medical_humidity_multiplier",
+    "medical_exertion_multiplier"
+  ],
+  "n_features": 28,
+  "classes": [
+    "Unsafe",
+    "Risky",
+    "Moderate",
+    "Safe"
+  ]
+}

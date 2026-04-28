@@ -1,0 +1,229 @@
+/* ══════════════════════════════════════════════════════
+   SafeTravel - Design System & Base Styles
+   ══════════════════════════════════════════════════════ */
+
+/* ─── Google Fonts ─── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+
+/* ─── CSS Custom Properties ─── */
+:root {
+  /* Colors - Dark Theme */
+  --bg-primary: hsl(225, 25%, 6%);
+  --bg-secondary: hsl(225, 22%, 10%);
+  --bg-tertiary: hsl(225, 20%, 14%);
+  --bg-card: rgba(255, 255, 255, 0.04);
+  --bg-card-hover: rgba(255, 255, 255, 0.07);
+  --bg-glass: rgba(255, 255, 255, 0.05);
+  --bg-glass-strong: rgba(255, 255, 255, 0.08);
+
+  --text-primary: hsl(220, 20%, 95%);
+  --text-secondary: hsl(220, 15%, 70%);
+  --text-tertiary: hsl(220, 10%, 50%);
+  --text-muted: hsl(220, 10%, 40%);
+
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-color-hover: rgba(255, 255, 255, 0.15);
+
+  /* Accent Colors */
+  --accent-primary: hsl(250, 90%, 65%);
+  --accent-secondary: hsl(200, 90%, 55%);
+  --accent-gradient: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+
+  /* Status Colors */
+  --color-safe: hsl(150, 80%, 45%);
+  --color-safe-bg: hsla(150, 80%, 45%, 0.12);
+  --color-moderate: hsl(50, 90%, 50%);
+  --color-moderate-bg: hsla(50, 90%, 50%, 0.12);
+  --color-risky: hsl(30, 95%, 50%);
+  --color-risky-bg: hsla(30, 95%, 50%, 0.12);
+  --color-unsafe: hsl(0, 80%, 55%);
+  --color-unsafe-bg: hsla(0, 80%, 55%, 0.12);
+
+  /* Factor Colors */
+  --color-aqi: hsl(280, 70%, 60%);
+  --color-temp: hsl(15, 85%, 55%);
+  --color-weather: hsl(200, 80%, 55%);
+  --color-uv: hsl(45, 90%, 55%);
+  --color-crowd: hsl(340, 70%, 55%);
+
+  /* Typography */
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Outfit', 'Inter', sans-serif;
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.25rem;
+  --fs-2xl: 1.5rem;
+  --fs-3xl: 1.875rem;
+  --fs-4xl: 2.25rem;
+  --fs-5xl: 3rem;
+  --fs-6xl: 3.75rem;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+
+  /* Borders & Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 16px 50px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 30px rgba(124, 58, 237, 0.15);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+
+  /* Glass effect */
+  --glass-blur: blur(20px);
+  --glass-blur-strong: blur(40px);
+
+  /* Layout */
+  --max-width: 1200px;
+  --header-height: 72px;
+}
+
+/* ─── Light Theme ─── */
+[data-theme="light"] {
+  --bg-primary: hsl(220, 20%, 97%);
+  --bg-secondary: hsl(220, 18%, 93%);
+  --bg-tertiary: hsl(220, 15%, 89%);
+  --bg-card: rgba(255, 255, 255, 0.8);
+  --bg-card-hover: rgba(255, 255, 255, 0.95);
+  --bg-glass: rgba(255, 255, 255, 0.6);
+  --bg-glass-strong: rgba(255, 255, 255, 0.8);
+
+  --text-primary: hsl(225, 25%, 12%);
+  --text-secondary: hsl(220, 15%, 40%);
+  --text-tertiary: hsl(220, 10%, 55%);
+  --text-muted: hsl(220, 10%, 65%);
+
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-color-hover: rgba(0, 0, 0, 0.15);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 16px 50px rgba(0, 0, 0, 0.15);
+  --shadow-glow: 0 0 30px rgba(124, 58, 237, 0.08);
+}
+
+/* ─── Reset ─── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Typography ─── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: var(--fs-5xl); }
+h2 { font-size: var(--fs-3xl); }
+h3 { font-size: var(--fs-2xl); }
+h4 { font-size: var(--fs-xl); }
+
+p {
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent-secondary);
+}
+
+/* ─── Utility Classes ─── */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.section {
+  padding: var(--space-20) 0;
+}
+
+.text-center { text-align: center; }
+.text-gradient {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hidden { display: none !important; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}

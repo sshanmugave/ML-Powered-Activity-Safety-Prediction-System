@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SafeTravel - AI-powered safety predictions for outdoor activities. Know if it's safe to visit any place at any time based on pollution, weather, UV, and crowd data.">
+  <meta name="keywords" content="travel safety, air quality, pollution, weather, outdoor activities, ML prediction">
+  <title>SafeTravel – Smart Travel Safety Predictions</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/animations.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+</head>
+<body>
+
+  <!-- ═══ Navbar ═══ -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <div class="navbar-brand">
+        <span class="logo-icon">🌍</span>
+        <span>Safe<span class="text-gradient">Travel</span></span>
+      </div>
+      <div class="navbar-actions">
+        <button class="btn-secondary" id="btn-model-info" title="Model Info">
+          <i data-lucide="brain" style="width:16px;height:16px"></i>
+          <span>ML Model</span>
+        </button>
+        <button class="theme-toggle" id="theme-toggle" title="Toggle theme">
+          <i data-lucide="moon" style="width:18px;height:18px"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══ Hero Section ═══ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="particles">
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div>
+      </div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="pulse-dot"></span>
+        <span>ML-Powered Safety Predictions</span>
+      </div>
+
+      <h1>Is it <span class="text-gradient">safe</span> to go?</h1>
+      <p class="hero-subtitle">
+        Enter any place, pick your activity & time — our ML model predicts whether it's safe to visit based on real-time pollution, weather, UV, and crowd data.
+      </p>
+
+      <!-- ═══ Search Panel ═══ -->
+      <div class="glass-card search-panel" id="search-panel">
+        <div class="form-grid">
+          
+          <!-- Place Search -->
+          <div class="form-group full-width">
+            <label class="form-label">
+              <i data-lucide="map-pin" style="width:14px;height:14px"></i>
+              Search Place
+            </label>
+            <div class="search-wrapper">
+              <input type="text" class="form-input" id="place-input" 
+                placeholder="Search any place... (e.g., Lodhi Garden, Dal Lake, Meenakshi Temple)"
+                autocomplete="off">
+              <div class="search-results hidden" id="search-results"></div>
+            </div>
+            <div id="selected-place-info" class="hidden" style="font-size:0.8rem;color:var(--text-tertiary);margin-top:4px;"></div>
+          </div>
+
+          <!-- Place Type -->
+          <div class="form-group">
+            <label class="form-label">
+              <i data-lucide="map" style="width:14px;height:14px"></i>
+              Place Type
+            </label>
+            <select class="form-select" id="place-type-select">
+              <option value="park">🌳 Park / Garden</option>
+              <option value="lake">🏞️ Lake / Water Body</option>
+              <option value="temple">🛕 Temple / Religious</option>
+              <option value="market">🏪 Market / Bazaar</option>
+              <option value="beach">🏖️ Beach</option>
+              <option value="hill">⛰️ Hill / Mountain</option>
+              <option value="monument">🏛️ Monument / Heritage</option>
+              <option value="mall">🏬 Mall / Shopping Center</option>
+              <option value="garden">🌺 Botanical Garden</option>
+              <option value="riverside">🌊 Riverside / Ghat</option>
+              <option value="zoo">🦁 Zoo / Wildlife Park</option>
+              <option value="stadium">🏟️ Stadium / Sports</option>
+              <option value="other">📍 Other</option>
+            </select>
+          </div>
+
+          <!-- Date & Time -->
+          <div class="form-group">
+            <label class="form-label">
+              <i data-lucide="clock" style="width:14px;height:14px"></i>
+              Date & Time
+            </label>
+            <input type="datetime-local" class="form-input" id="datetime-input">
+          </div>
+
+          <!-- Activity Selector -->
+          <div class="form-group full-width">
+            <label class="form-label">
+              <i data-lucide="activity" style="width:14px;height:14px"></i>
+              What's your activity?
+            </label>
+            <div class="activity-grid stagger-children visible" id="activity-grid">
+              <div class="activity-card active" data-activity="jogging">
+                <span class="emoji">🏃</span>
+                <span class="label">Jogging</span>
+              </div>
+              <div class="activity-card" data-activity="family_outing">
+                <span class="emoji">👨‍👩‍👧‍👦</span>
+                <span class="label">Family Outing</span>
+              </div>
+              <div class="activity-card" data-activity="temple_visit">
+                <span class="emoji">🛕</span>
+                <span class="label">Temple Visit</span>
+              </div>
+              <div class="activity-card" data-activity="photography">
+                <span class="emoji">📸</span>
+                <span class="label">Photography</span>
+              </div>
+              <div class="activity-card" data-activity="cycling">
+                <span class="emoji">🚴</span>
+                <span class="label">Cycling</span>
+              </div>
+              <div class="activity-card" data-activity="picnic">
+                <span class="emoji">🧺</span>
+                <span class="label">Picnic</span>
+              </div>
+              <div class="activity-card" data-activity="water_sport">
+                <span class="emoji">🏊</span>
+                <span class="label">Water Sport</span>
+              </div>
+              <div class="activity-card" data-activity="shopping">
+                <span class="emoji">🛍️</span>
+                <span class="label">Shopping</span>
+              </div>
+              <div class="activity-card" data-activity="sightseeing">
+                <span class="emoji">🏛️</span>
+                <span class="label">Sightseeing</span>
+              </div>
+              <div class="activity-card" data-activity="trekking">
+                <span class="emoji">🥾</span>
+                <span class="label">Trekking</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Medical Condition -->
+          <div class="form-group full-width">
+            <label class="form-label">
+              <i data-lucide="heart-pulse" style="width:14px;height:14px"></i>
+              Any medical condition? <span style="font-weight:400;color:var(--text-muted)">(for personalized advice)</span>
+            </label>
+            <div class="medical-grid stagger-children visible" id="medical-grid">
+              <div class="medical-card active" data-medical="none">
+                <span class="emoji">💪</span>
+                <span class="label">No Condition</span>
+              </div>
+              <div class="medical-card" data-medical="asthma">
+                <span class="emoji">🫁</span>
+                <span class="label">Asthma</span>
+              </div>
+              <div class="medical-card" data-medical="heart_disease">
+                <span class="emoji">❤️‍🩹</span>
+                <span class="label">Heart Disease</span>
+              </div>
+              <div class="medical-card" data-medical="allergies">
+                <span class="emoji">🤧</span>
+                <span class="label">Allergies</span>
+              </div>
+              <div class="medical-card" data-medical="skin_sensitivity">
+                <span class="emoji">🧴</span>
+                <span class="label">Skin Sensitivity</span>
+              </div>
+              <div class="medical-card" data-medical="elderly">
+                <span class="emoji">👴</span>
+                <span class="label">Elderly (60+)</span>
+              </div>
+              <div class="medical-card" data-medical="pregnancy">
+                <span class="emoji">🤰</span>
+                <span class="label">Pregnancy</span>
+              </div>
+              <div class="medical-card" data-medical="respiratory">
+                <span class="emoji">😮‍💨</span>
+                <span class="label">Respiratory Issues</span>
+              </div>
+              <div class="medical-card" data-medical="diabetes">
+                <span class="emoji">💉</span>
+                <span class="label">Diabetes</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="form-group full-width">
+            <button class="btn-primary" id="btn-predict" disabled>
+              <i data-lucide="shield-check" style="width:20px;height:20px"></i>
+              <span>Check Safety</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Results Section ═══ -->
+  <section class="result-section hidden" id="result-section">
+    <div class="container">
+      
+      <!-- Result Header -->
+      <div class="result-header" id="result-header">
+        <div class="result-place-name" id="result-place-name"></div>
+        <div class="result-activity" id="result-activity"></div>
+        <div class="pollution-breakdown" id="pollution-breakdown" style="margin-top:8px;font-size:0.95rem;color:var(--text-tertiary);">
+          <span>O3: <strong id="o3-value">--</strong></span>
+          <span style="margin-left:12px">NO2: <strong id="no2-value">--</strong></span>
+          <span id="site-location" style="margin-left:12px"></span>
+        </div>
+      </div>
+
+      <!-- Safety Gauge -->
+      <div class="safety-gauge-container result-enter" id="gauge-container">
+        <div class="safety-gauge gauge-animated" id="safety-gauge">
+          <svg viewBox="0 0 220 220">
+            <circle class="bg-ring" cx="110" cy="110" r="95"></circle>
+            <circle class="score-ring" id="score-ring" cx="110" cy="110" r="95"
+              stroke-dasharray="597" stroke-dashoffset="597"></circle>
+          </svg>
+          <div class="gauge-center">
+            <div class="gauge-score" id="gauge-score">--</div>
+            <div class="gauge-label" id="gauge-label">Loading</div>
+            <div class="gauge-confidence" id="gauge-confidence"></div>
+          </div>
+        </div>
+        <div class="status-badge" id="status-badge">
+          <span id="status-emoji"></span>
+          <span id="status-text"></span>
+        </div>
+        <p class="status-message" id="status-message"></p>
+      </div>
+
+      <!-- Factor Breakdown -->
+      <div class="section-header animate-on-scroll">
+        <h2>📊 Risk Factor Breakdown</h2>
+        <p>How each environmental factor affects your safety</p>
+      </div>
+      <div class="factors-grid stagger-children" id="factors-grid"></div>
+
+      <!-- Health Tips -->
+      <div class="tips-section animate-on-scroll" id="tips-section">
+        <div class="section-header">
+          <h2>💡 Health Advisory</h2>
+          <p>Personalized tips based on conditions and your health profile</p>
+        </div>
+        <div class="tips-grid" id="tips-grid"></div>
+      </div>
+
+      <!-- Best Time Chart -->
+      <div class="chart-section animate-on-scroll" id="chart-section">
+        <div class="section-header">
+          <h2>⏰ Best Time to Visit</h2>
+          <p>Safety score across 24 hours — find the perfect window</p>
+        </div>
+        <div class="glass-card chart-container">
+          <div class="chart-canvas-wrap">
+            <canvas id="timeline-chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity Comparison -->
+      <div class="chart-section animate-on-scroll" id="compare-section">
+        <div class="section-header">
+          <h2>🔄 Activity Comparison</h2>
+          <p>How safe are different activities at this place right now?</p>
+        </div>
+        <div class="compare-grid" id="compare-grid"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ Model Info Modal ═══ -->
+  <div class="loading-overlay" id="model-modal">
+    <div class="glass-card" style="max-width:700px;width:90%;max-height:80vh;overflow-y:auto;position:relative;">
+      <button id="close-model-modal" style="position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:1.5rem;">✕</button>
+      <div class="section-header" style="text-align:left">
+        <h2>🧠 ML Model Info</h2>
+        <p>Details about the trained safety prediction model</p>
+      </div>
+      <div class="model-stats" id="model-stats"></div>
+      <div style="margin-top:24px;" id="model-details"></div>
+    </div>
+  </div>
+
+  <!-- ═══ Loading Overlay ═══ -->
+  <div class="loading-overlay" id="loading-overlay">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <div class="loading-text" id="loading-text">Analyzing safety conditions...</div>
+    </div>
+  </div>
+
+  <!-- ═══ Toast Container ═══ -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- ═══ Footer ═══ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">🌍 Safe<span class="text-gradient">Travel</span></div>
+        <p class="footer-text">ML-powered activity safety predictions • Built with Random Forest & XGBoost</p>
+        <div class="footer-links">
+          <a href="#" id="footer-model-link">Model Info</a>
+          <span style="color:var(--text-muted)">•</span>
+          <span style="color:var(--text-tertiary);font-size:0.875rem;">Weather data by OpenWeatherMap</span>
+          <span style="color:var(--text-muted)">•</span>
+          <span style="color:var(--text-tertiary);font-size:0.875rem;">Geocoding by Nominatim/OSM</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══ Scripts ═══ -->
+  <script src="/js/utils.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/charts.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>
